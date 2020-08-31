@@ -27,7 +27,7 @@ class TodoController{
                  if(err){
                     res.status(400).json(err.errors)
                 }else{
-                    console.log(err)
+
                     res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (createTodo)'})
                 }
             })
@@ -48,12 +48,9 @@ class TodoController{
             
         })
         .catch(err=>{
-            if(!err){
-                res.status(400).json({message : `Sorry There is no id ${idTodo} in database`})
-            }else{
-                console.log(err)
+
                 res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (getTodoById)'})
-            }
+            
         })
         
     }
@@ -69,14 +66,19 @@ class TodoController{
             }
         })
         .then(data=>{
-            res.status(200).json({message: 'Data berhasil di update'})
+            
+            if(data != 0){
+                res.status(200).json({message: 'Data berhasil di update'})
+            }else{
+                res.status(400).json({message:`Sorry There is no id ${idTodo} in database`})
+            }
+            
         })
         .catch(err=>{
 
             if(err.errors){
                 res.status(400).json(err.errors)
             }else{
-                console.log(err)
                 res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (updateTodo)'})
             }
 
@@ -103,7 +105,6 @@ class TodoController{
         })
         .catch(err=>{
 
-                console.log(err)
                 res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (deleteTodo)'})
         })
 
