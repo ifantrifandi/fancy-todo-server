@@ -1,61 +1,65 @@
 const { Todo } = require('../models')
+const helper = require('../helpers/helper.js')
+require('dotenv').config()
+const {google} = require('googleapis')
 
 class TodoController{
 
-    static getTodo(req , res){
+    static getTodo(req , res , next){
 
         Todo.findAll()
             .then(data=>{
                 res.status(200).json(data)
             })
-            .catch(err=>{
-                console.log(err)
-                res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (getTodo)'})
-            })
+            .catch(next)
 
     }
 
-    static createTodo(req , res){
+    static createTodo(req , res , next){
 
         const dataTodo = req.body
+        let newData = []
 
         Todo.create(dataTodo)
             .then(data=>{
-                res.status(201).json(data)
-            })
-            .catch(err=>{
-                 if(err){
-                    res.status(400).json(err.errors)
-                }else{
+                newData.push(data)
+                return google.youtube('v3').search.list({
+                    key: process.env.YOUTUBE_TOKEN,
+                    part : 'snippet',
+                    q: dataTodo.title,
+                })
+                .then(response=>{
 
-                    res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (createTodo)'})
-                }
+                    let video = helper(response)
+                    let reference = {video}
+
+                    newData = {newData , reference}
+                    res.status(201).json(newData)
+                })
             })
+            .catch(next)
 
     }
 
-    static getTodoById(req , res){
+    static getTodoById(req , res , next){
 
         const idTodo = req.params.id
+        console.log(idTodo , req.isLoggedIn)
 
-        Todo.findByPk(idTodo)
-        .then(data=>{
-            if(data){
-                res.status(200).json(data)
-            }else{
-                res.status(400).json({message : `Sorry There is no id ${idTodo} in database`})
-            }
-            
-        })
-        .catch(err=>{
-
-                res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (getTodoById)'})
-            
-        })
+            Todo.findByPk(idTodo)
+                .then(data=>{
+                    if(data){
+                        res.status(200).json(data)
+                    }else{
+                       throw { message : `Sorry There is no id ${idTodo} in database` , status:400}
+                    }
+                })
+                .catch(next)
+        
         
     }
 
-    static updateTodo(req ,res){
+    static updateTodo(req ,res , next){
 
         const idTodo = req.params.id
         const dataTodo = req.body
@@ -68,25 +72,30 @@ class TodoController{
         .then(data=>{
             
             if(data != 0){
-                res.status(200).json({message: 'Data berhasil di update'})
+
+                return google.youtube('v3').search.list({
+                    key: process.env.YOUTUBE_TOKEN,
+                    part : 'snippet',
+                    q: dataTodo.title,
+                })
+                .then(response=>{
+
+                    let video = helper(response)
+                    let reference = {video}
+                    res.status(201).json({message : 'Data berhasil di update' , reference})
+                    
+                })
+
             }else{
-                res.status(400).json({message:`Sorry There is no id ${idTodo} in database`})
+                throw {message:`Sorry There is no id ${idTodo} in database` , status:400}
             }
             
         })
-        .catch(err=>{
-
-            if(err.errors){
-                res.status(400).json(err.errors)
-            }else{
-                res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (updateTodo)'})
-            }
-
-        })
+        .catch(next)
 
     }
 
-    static deleteTodo(req , res){
+    static deleteTodo(req , res , next){
 
         const idTodo = req.params.id
 
@@ -99,14 +108,10 @@ class TodoController{
             if(data){
                 res.status(200).json({message : 'Data sudah sudah berhasil di delete'})
             }else{
-                res.status(400).json({message : `Sorry There is no id ${idTodo} in database`})
+               throw {message:`Sorry There is no id ${idTodo} in database` , status:400}
             }
-            
         })
-        .catch(err=>{
-
-                res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (deleteTodo)'})
-        })
+        .catch(next)
 
     }
     

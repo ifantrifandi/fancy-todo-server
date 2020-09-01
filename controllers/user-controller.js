@@ -1,10 +1,11 @@
 const {Todo , User} = require('../models')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 class UserController{
 
-    static register(req , res){
+    static register(req , res , next){
 
         let dataUser = req.body
 
@@ -12,18 +13,11 @@ class UserController{
             .then(data=>{
                 res.status(201).json({id : data.id , email:data.email , message:`User ${data.email} Has Been Create`})
             })
-            .catch(err=>{
-                console.log(err)
-                if(err.errors){
-                    res.status(400).json(err)
-                }else{
-                    res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (register)'})
-                }
-            })
+            .catch(next)
 
     }
 
-    static  login( req , res){
+    static  login( req , res , next){
 
         let dataUser = req.body
 
@@ -40,22 +34,18 @@ class UserController{
 
                 if(checkPassword){
                     
-                    const access_token = jwt.sign({id:data.id , email:data.email} , 'secretkey')
-                    const decoded = jwt.verify(access_token , 'secretkey')
-
-                    res.status(200).json({access_token , message : {decoded}})
+                    const access_token = jwt.sign( {id:data.id , email:data.email} , process.env.SECRET_KEY)
+                    
+                    res.status(200).json({access_token})
                 }else{
-                    res.status(401).json({message : 'Please Register first!'})
+                    throw {message : 'Email / Password is Wrong' , status : 401}
                 }
 
             }else{
-                res.status(401).json({message : 'Email / Password is Wrong'})
+                throw {message : 'Email / Password is Wrong' , status : 401}
             }
         })
-        .catch(err=>{
-            console.log(err)
-            res.status(500).json({message : 'Sorry, There is error in our server. Please Try Again. (register)'})
-        })
+        .catch(next)
     }
 
 }
