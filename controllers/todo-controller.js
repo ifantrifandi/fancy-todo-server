@@ -16,10 +16,10 @@ class TodoController{
     }
 
     static createTodo(req , res , next){
-
+        
         const dataTodo = req.body
         let newData = []
-
+        console.log(dataTodo)
         Todo.create(dataTodo)
             .then(data=>{
                 newData.push(data)
@@ -34,7 +34,7 @@ class TodoController{
                     let reference = {video}
 
                     newData = {newData , reference}
-                    res.status(201).json(newData)
+                    res.status(201).json(data)
                 })
             })
             .catch(next)
@@ -49,6 +49,20 @@ class TodoController{
             Todo.findByPk(idTodo)
                 .then(data=>{
                     if(data){
+                        let year =  data.due_date.getFullYear()
+                        let month = data.due_date.getMonth() + 1
+
+                        if(month < 10){
+                            month = '0' + month
+                        }
+
+                        
+                        let date = data.due_date.getDate()
+                        if(date < 10){
+                            date = '0' + date
+                        }
+                        let newDate = `${month}/${date}/${year}`
+                        data.date = newDate
                         res.status(200).json(data)
                     }else{
                        throw { message : `Sorry There is no id ${idTodo} in database` , status:400}
