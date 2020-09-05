@@ -62,7 +62,7 @@ $('#login-submit').click((event)=>{
         }
     })
     .done((response)=>{
-        console.log(response)
+ 
         localStorage.setItem('iduser' , response.id)
         localStorage.setItem('email' , email)
         localStorage.setItem('token' , response.access_token)
@@ -90,6 +90,7 @@ $('#add-todo').click((event)=>{
 $('#create-todo').click((event)=>{
     event.preventDefault()
     checkAuth(event)
+    $('#todo-all-page').hide()
     let title = $('#title').val()
     let description = $('#description').val()
     let due_date = $('#due_date').val() 
@@ -211,10 +212,10 @@ function editTodo( id ){
     $('#title-edit').val(`${response.title}`)
     $('#description-edit').text(`${response.description}`)
     $('#due-date-edit').val(`${newSuperDate}`)
-
+    checkAuth()
     $('#todo-all-page').hide()
     $('#edit-todo').show()
-    checkAuth(event)
+   
     })
     .fail(err=>{
         console.log(err)
@@ -256,6 +257,7 @@ function deleteHistoryTodo( id ){
 }
 
 function getData(){
+
     $('#table-todo-all').empty()
     $.ajax('http://localhost:3001/todos' , {
         method: 'GET',
@@ -366,10 +368,18 @@ function checkAuth(){
     if(!localStorage.token){
         $('.hidden').hide()
         $('#login-page').show()
+    }else{
+        $('#login-page').hide()
+        $('#todo-all-page').show()
+        getData()
     }
 
 }
 
+$('document').ready(()=>{
+    checkAuth()
+    
+})
 
 function onSignIn(googleUser) {
     
@@ -389,8 +399,6 @@ function onSignIn(googleUser) {
         localStorage.setItem('token' , response.access_token)
         localStorage.setItem('iduser' , response.id)
         
-
-
         $('#todo-all-page').show()
         $('#login-page').hide()
         getData()

@@ -68,16 +68,16 @@
     </section>
 
     <section id="todo-all-page" class="hidden" >
-        <h1>Welcome, this all of the list To Do in Database!</h1>
+        <h1 id="title-todo-all-page">Welcome , This is All of Your Todo Task</h1>
         <button id="history">History</button>
         <button id="logout">Log Out</button>
         <table id="table-todo-all" class="display">
         </table>
-        <button id="add-todo">Add To Do</button>   
+        <button id="add-todo" class="btn-btm">Add To Do</button>   
     </section>
 
     <section id="todo-history-page" class="hidden">
-        <h1>Welcome, this all of the list History To Do in Database!</h1>
+        <h1>Welcome , This is All of Your Todo Task History in Database</h1>
         <button id="back-from-history">Back To Dashboard</button>
         <table id="table-history-all" class="display">
         </table>
@@ -100,11 +100,9 @@
                     <td><label for="due_date">Due Date:</label></td>
                     <td><input type="date" name="due_date" id="due_date"></td>
                 </tr>
-                <tr>
-                    <td><button id="create-todo">Create Todo</button></td>
-                </tr>
             </table>
 
+            <td><button id="create-todo" class="btn-btm">Create Todo</button></td>
         </form>
         
     </section>
@@ -117,7 +115,7 @@
             <table>
                 <tr>
                     <td><label for="title">Title:</label></td>
-                    <td id='test'><input type="text" name="title" id="title-edit"></td>
+                    <td ><input type="text" name="title" id="title-edit"></td>
                 </tr>
                 <tr>
                     <td><label for="description">Description:</label></td>
@@ -137,8 +135,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><button id="back-to-dashboard">Back To Dashboard</button></td>
-                    <td><button id="edit-todo-submit">Edit Todo</button></td>
+                    <td><button id="back-to-dashboard" class="btn-btm">Back To Dashboard</button></td>
+                    <td><button id="edit-todo-submit" class="btn-btm">Edit Todo</button></td>
                 </tr>
             </table>
 
