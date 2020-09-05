@@ -6,8 +6,12 @@ const TodoController = require('../controllers/todo-controller.js')
 
 
 router.use(authentication)
-router.use(authorization)
+// authorization saat ini belum dipakai dikarenakan belum ada yang mendefinisikan apakah data / page yang digunakan dapat digunakan banyak orang / role yang berbeda
+// bisa dipakai untuk saat ini apabila email hanya untuk test@email.com saja
+// router.use(authorization)
+
 router.get('/' , TodoController.getTodo)
+router.get('/history' , TodoController.getAllTodo)
 router.post('/' , TodoController.createTodo)
 router.get('/:id' , TodoController.getTodoById)
 router.put('/:id' , TodoController.updateTodo)

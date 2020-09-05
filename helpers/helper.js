@@ -1,6 +1,5 @@
 function formatData(response){
 
-    let data = []
 
     for(let i = 0 ; i < response.data.items.length ; i++){
         let tampunganLink = 'https://www.youtube.com/watch?v='
@@ -9,10 +8,9 @@ function formatData(response){
         }else{
             tampunganLink = `https://www.youtube.com/channel/${response.data.items[i].id.channelId}`
         }
-        data.push(tampunganLink)
+        return tampunganLink
     }
 
-    return data
 }
 
 module.exports = formatData

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fancy Todo</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <meta name="google-signin-client_id" content="898768895094-9co6bp6bghjrgnbqb9g9nllfctp7u4ec.apps.googleusercontent.com">
 </head>
 
 <body>
@@ -13,7 +15,7 @@
     <section id="login-page">
         <h1>Login to Find Your Todos!!</h1>
 
-        <form method="POST">
+        <form method="POST" >
     
             <table>
                 <tr>
@@ -25,12 +27,19 @@
                     <td><input type="password" name="password" id="login-password"></td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="Login" id="login-submit"></td>
-                    <td><button id ="register">Register</button></td> 
+                    <td><button id ="register">Register</button></td>
+                    <td><input type="submit" value="Login" id="login-submit"></td> 
                 </tr>
+                    <tr>
+                        <td></td>
+                        <td><div class="g-signin2" data-onsuccess="onSignIn"></div></td>
+                    </tr>
             </table>
-    
+
         </form>
+
+       
+
     </section>
     
     <section id="register-page" class="hidden">
@@ -49,8 +58,8 @@
                 <td><input type="password" name="password" id="register-password"></td>
             </tr>
             <tr>
-                <td><input type="submit" value="Register" id="register-submit"></td>
                 <td><button id="back-to-login">Back To Login</button></td> 
+                <td><input type="submit" value="Register" id="register-submit"></td>      
             </tr>
         </table>
 
@@ -58,17 +67,25 @@
 
     </section>
 
-    <section id="todo-all-page" class="hidden">
+    <section id="todo-all-page" class="hidden" >
         <h1>Welcome, this all of the list To Do in Database!</h1>
+        <button id="history">History</button>
         <button id="logout">Log Out</button>
-        <table id="table-todo-all">
+        <table id="table-todo-all" class="display">
         </table>
         <button id="add-todo">Add To Do</button>   
     </section>
 
+    <section id="todo-history-page" class="hidden">
+        <h1>Welcome, this all of the list History To Do in Database!</h1>
+        <button id="back-from-history">Back To Dashboard</button>
+        <table id="table-history-all" class="display">
+        </table>
+    </section>
+
     <section id="create-todo-page" class="hidden">
         <h1>Create Your To Do</h1>
-        
+        <td><button id="back-from-create">Back To Dashboard</button></td>
         <form method="POST">
             <table>
                 <tr>
@@ -111,20 +128,24 @@
                     <td><input type="date" name="due_date" id="due-date-edit"></td>
                 </tr>
                 <tr>
-                    <td><label for="status">Status:</label></td>
-                    <td><input type="text" name="status" id="status-edit"></td>
+                    <td><label for="status-edit">Status:</label></td>
+                    <td>
+                            <select name="status-edit" id="status-edit" >
+                                <option value="on process" selected >On Process</option>
+                                <option value="completed" >Completed</option>
+                            </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td><button id="edit-todo-submit">Edit Todo</button></td>
                     <td><button id="back-to-dashboard">Back To Dashboard</button></td>
+                    <td><button id="edit-todo-submit">Edit Todo</button></td>
                 </tr>
             </table>
 
         </form>
     </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>    
     <script src="main.js"></script>
 
 </body>

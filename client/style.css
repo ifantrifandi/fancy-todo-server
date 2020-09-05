@@ -1,3 +1,58 @@
+body{
+    text-align: center;
+}
+
+table{
+    margin: 0 auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td{
+    text-align: left;
+}
+
+#login-submit{
+    margin-left: 60%;
+}
+#register-submit{
+    margin-left: 52.75%;
+}
+
+#logout{
+    margin-left: 50px;
+}
 .hidden{
     display: none;
+}
+
+#register , #login-submit {
+    margin-top: 20px;
+}
+
+#back-from-create{
+    margin-bottom: 15px;
+}
+
+.g-signin2{
+    margin-top: 20px;
+}
+
+.display td , .display th{
+    
+    border: 1px solid black;
+    
+}
+
+.display th{
+    background-color: yellowgreen;
+}
+
+.display td{
+    background-color: whitesmoke;
+}
+
+.display a{
+    text-decoration: none;
+    color: black;
 }
