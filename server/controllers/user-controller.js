@@ -1,7 +1,6 @@
 const {Todo , User} = require('../models')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client('898768895094-9co6bp6bghjrgnbqb9g9nllfctp7u4ec.apps.googleusercontent.com')
 

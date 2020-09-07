@@ -1,6 +1,5 @@
 const { Todo } = require('../models')
 const helper = require('../helpers/helper.js')
-require('dotenv').config()
 const {google} = require('googleapis')
 const Sequelize = require('sequelize');
 const { Op } = require("sequelize")
