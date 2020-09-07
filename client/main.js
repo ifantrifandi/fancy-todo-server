@@ -30,7 +30,7 @@ $('#register-submit').click((event)=>{
 
     $.ajax({
         method:'POST',
-        url: 'http://localhost:3001/register',
+        url: 'https://first-fancy-todo.herokuapp.com/ register',
         data :{
             email,
             password
@@ -55,7 +55,7 @@ $('#login-submit').click((event)=>{
 
     $.ajax({
         method : 'POST',
-        url : 'http://localhost:3001/login',
+        url : 'https://first-fancy-todo.herokuapp.com/ login',
         data:{
             email,
             password
@@ -98,7 +98,7 @@ $('#create-todo').click((event)=>{
 
     $.ajax({
         method : 'POST',
-        url : 'http://localhost:3001/todos',
+        url : 'https://first-fancy-todo.herokuapp.com/ todos',
         data :{
             title,
             description,
@@ -147,7 +147,7 @@ $('#edit-todo-submit').click((event)=>{
 
     $.ajax({
         method : 'PUT',
-        url : `http://localhost:3001/todos/${idEdit}`,
+        url : `https://first-fancy-todo.herokuapp.com/ todos/${idEdit}`,
         data : {
             title,
             description,
@@ -197,7 +197,7 @@ $('#back-from-history').click(event=>{
 function editTodo( id ){
     $.ajax({
         method : 'GET',
-        url :`http://localhost:3001/todos/${id}`,
+        url :`https://first-fancy-todo.herokuapp.com/ todos/${id}`,
         headers: {
             token: localStorage.token
         }
@@ -228,7 +228,7 @@ function deleteTodo( id ){
     checkAuth(event)
 
     $.ajax({
-        url: `http://localhost:3001/todos/${id}`,
+        url: `https://first-fancy-todo.herokuapp.com/ todos/${id}`,
         method :'DELETE',
         headers: {
             token: localStorage.token
@@ -244,7 +244,7 @@ function deleteHistoryTodo( id ){
     
     checkAuth(event)
     $.ajax({
-        url: `http://localhost:3001/todos/${id}`,
+        url: `https://first-fancy-todo.herokuapp.com/ todos/${id}`,
         method :'DELETE',
         headers: {
             token: localStorage.token
@@ -259,7 +259,7 @@ function deleteHistoryTodo( id ){
 function getData(){
 
     $('#table-todo-all').empty()
-    $.ajax('http://localhost:3001/todos' , {
+    $.ajax('https://first-fancy-todo.herokuapp.com/ todos' , {
         method: 'GET',
         headers: {
             token: localStorage.token
@@ -310,7 +310,7 @@ function getData(){
 
 function getHistoryData(){
     $('#table-history-all').empty()
-    $.ajax('http://localhost:3001/todos/history' , {
+    $.ajax('https://first-fancy-todo.herokuapp.com/ todos/history' , {
         method: 'GET',
         headers: {
             token: localStorage.token
@@ -388,7 +388,7 @@ function onSignIn(googleUser) {
     
     $.ajax({
         method : 'POST',
-        url : 'http://localhost:3001/login-google',
+        url : 'https://first-fancy-todo.herokuapp.com/ login-google',
         data:{
             id_token
         }
