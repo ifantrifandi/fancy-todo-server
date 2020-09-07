@@ -50,8 +50,8 @@ module.exports = (sequelize, DataTypes) => {
           msg : 'Password tidak boleh kosong'
         },
         len : {
-          args : [5 , 20],
-          msg : 'Password Length 5 - 20'
+          args : [5 , 50],
+          msg : 'Password Length 5 - 50'
         }
       }
     }

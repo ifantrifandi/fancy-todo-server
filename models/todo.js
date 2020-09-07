@@ -42,16 +42,9 @@ module.exports = (sequelize, DataTypes) => {
       validate :{
 
         dateValidator( value ){
-          
-          let date = new Date().getDate()
-          let month = new Date().getMonth() + 1
-          let year = new Date().getFullYear()
 
-          if(month < 10){
-            month = '0' + month
-          }
+          let newDate = new Date(Date.now()).setHours(0, 0, 0, 0)
 
-          let newDate = new Date(`${year}-${month}-${date}T07:00`).getTime()
           value = value.getTime()
 
           if(value < newDate){

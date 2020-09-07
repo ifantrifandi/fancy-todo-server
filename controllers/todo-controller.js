@@ -2,7 +2,6 @@ const { Todo } = require('../models')
 const helper = require('../helpers/helper.js')
 require('dotenv').config()
 const {google} = require('googleapis')
-const { response } = require('express')
 const Sequelize = require('sequelize');
 const { Op } = require("sequelize")
 
@@ -42,8 +41,10 @@ class TodoController{
     static createTodo(req , res , next){
         
         const dataTodo = req.body
-        
 
+        dataTodo.UserId = req.isLoggedIn.id
+
+        console.log(dataTodo)
         return google.youtube('v3').search.list({
             key: process.env.YOUTUBE_TOKEN,
             part : 'snippet',
@@ -52,13 +53,10 @@ class TodoController{
         })
         .then(youtubeData =>{
             let reference = helper(youtubeData)
-            console.log(reference)
             dataTodo.reference = reference
-            console.log(dataTodo)
             return Todo.create(dataTodo)
         })
         .then(data=>{
-            console.log(data)
             res.status(201).json(data)
         })
         .catch(next)
@@ -102,15 +100,13 @@ class TodoController{
         const dataTodo = req.body
 
         dataTodo.status = dataTodo.status.toUpperCase()
-        console.log(dataTodo)
+
         Todo.update(dataTodo , {
                 where : {
                     id : idTodo
                 }
             })
         .then(data=>{
-
-            console.log(data)
 
             if(data != 0){
                 res.status(201).json({message : 'Data berhasil di update' , data})

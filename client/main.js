@@ -399,10 +399,7 @@ function onSignIn(googleUser) {
         localStorage.setItem('token' , response.access_token)
         localStorage.setItem('iduser' , response.id)
         
-        $('#todo-all-page').show()
-        $('#login-page').hide()
-        getData()
-        
+
         checkAuth()
 
 

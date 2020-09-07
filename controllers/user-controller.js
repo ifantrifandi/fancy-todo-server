@@ -71,17 +71,20 @@ class UserController{
                 }
             })
             .then(data=>{
+
                 if(!data){
                     return User.create(dataUser)
+                    .then(data=>{
+
+                        let access_token = jwt.sign({id : data.id , email : data.email} , process.env.SECRET_KEY )
+                        res.status(200).json({access_token , id:data.id , email : data.email})
+                    })
                 }else{
                     let access_token = jwt.sign({id : data.id , email : data.email} , process.env.SECRET_KEY)
                     res.status(200).json({access_token , id:data.id , email : data.email})
                 }
             })
-            .then(data=>{
-                let access_token = jwt.sign({id : data.id , email : data.email} , process.env.SECRET_KEY )
-                res.status(200).json({access_token , id:data.id , email : data.email})
-            })
+            
             .catch(next)
         })
 
